@@ -48,10 +48,15 @@ const Blog = () => {
   };
 
   const addViewer = async () => {
-    let res = await increaseViewer(parseInt(id));
-    if (res?.status) {
+    if (blog?.authorName != Name.namaPengguna) {
+      let res = await increaseViewer(parseInt(id));
+      if (res?.status) {
+        history.push("/");
+        window.location.reload();
+      }
+    } else {
       history.push("/");
-      window.location.reload();
+        window.location.reload();
     }
   };
 
@@ -127,9 +132,12 @@ const Blog = () => {
             ) : (
               ""
             )}
-            <div className="addBlog-wrap">
-              <button onClick={deleteBlog}>Delete Content</button>
-            </div>
+            {blog?.authorName === Name.namaPengguna ? (
+             <div className="addBlog-wrap"><button onClick={deleteBlog}>Delete Content</button></div>
+            ) : (
+              ""
+            )}
+            
           </div>
           <h5>Comments :</h5>
           {blog?.commentsList.map((d, i) => {
